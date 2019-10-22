@@ -10,6 +10,7 @@ import random
 from Individual import *
 import sys
 
+
 myStudentNum = 132719 # Replace 12345 with your student number
 random.seed(myStudentNum)
 
@@ -59,7 +60,7 @@ class BasicTSP:
         for ind_i in self.population:
             if self.best.getFitness() > ind_i.getFitness():
                 self.best = ind_i.copy()
-        print ("Best initial sol: ",self.best.getFitness())
+        print ("Best initial sol: ", self.best.getFitness())
 
     def updateBest(self, candidate):
         if self.best == None or candidate.getFitness() < self.best.getFitness():
@@ -78,13 +79,29 @@ class BasicTSP:
         """
         Your stochastic universal sampling Selection Implementation
         """
+        total_fitness = sum(individual.getFitness() for individual in self.population)
+        point_distance = total_fitness / 2
+        start_point = random.uniform(0, point_distance)
+        points = [start_point + i * point_distance for i in range(self.popSize)]
 
-        F = sum(individual.getFitness() for individual in self.population)
-        N = len(self.population)
 
+        parents = set()
+        while len(parents) < self.popSize:
+            random.shuffle(self.population)
+            i = 0
+            while i < len(points) and len(parents) < self.popSize:
+                j = 0
+                subset_sum = 0
+                while j < len(self.population):
+                    subset_sum += self.population[j].fitness
+                    if subset_sum > points[i]:
+                        parents.add(self.population[j])
+                        break
+                    j += 1
+                i += 1
 
+        self.matingPool = list(parents)
 
-        pass
 
     def uniformCrossover(self, indA, indB):
         """
@@ -102,44 +119,39 @@ class BasicTSP:
         """
         Your PMX Crossover Implementation
         """
-        genesA = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        genesB = [9, 3, 7, 8, 2, 6, 5, 1, 4]
-
-        size = min(len(genesA), len(genesB))
+        size = min(len(indA.genes), len(indB.genes))
 
         # pick 2 index numbers for gene swap
-        # gene_range = random.sample(range(0, size), 2)
-        gene_range = [3, 7]
+        gene_range = random.sample(range(0, size), 2)
 
         gene_range.sort()
 
-        # swap the sequence of genes withing the index range
-        # temp = indA.genes[gene_range[0]:gene_range[1]]
-        # indA.genes[gene_range[0]:gene_range[1]] = indB.genes[gene_range[0]:gene_range[1]]
-        # indB.genes[gene_range[0]:gene_range[1]] = temp
+        childA = indA.copy()
+        childB = indB.copy()
 
-        temp = genesA[gene_range[0]:gene_range[1]]
-        genesA[gene_range[0]:gene_range[1]] = genesB[gene_range[0]:gene_range[1]]
-        genesB[gene_range[0]:gene_range[1]] = temp
+        # swap the sequence of genes withing the index range
+        childA.genes[gene_range[0]:gene_range[1]] = indB.genes[gene_range[0]:gene_range[1]]
+        childB.genes[gene_range[0]:gene_range[1]] = indB.genes[gene_range[0]:gene_range[1]]
 
         # for each gene in sequence
         for i in range(gene_range[0], gene_range[1]):
             # check if genes copied from parent B are not in parent A
-            if genesB[i] not in genesA[gene_range[0]:gene_range[1]]:
-                genesA = self.swapGenesInSequence(genesB, genesA, genesB[i], genesA[i], gene_range[0], gene_range[1])
+            if childB.genes[i] not in childA.genes[gene_range[0]:gene_range[1]]:
+                childA = self.swapGenesInSequence(indA, indB, childA, childB.genes[i], childA.genes[i], gene_range[0],
+                                                  gene_range[1])
 
             # check if genes copied from parent A are not in parent B
-            if genesA[i] not in genesB[gene_range[0]:gene_range[1]]:
-                genesB = self.swapGenesInSequence(genesA, genesB, genesA.index(genesB[i]), genesB[i], gene_range[0], gene_range[1])
+            if childA.genes[i] not in childB.genes[gene_range[0]:gene_range[1]]:
+                childB = self.swapGenesInSequence(indB, indA, childB, childA.genes[i], childB.genes[i], gene_range[0], gene_range[1])
 
-        return genesA, genesB
+        return childA, childB
 
-    def swapGenesInSequence(self, source, target, source_gene, target_gene, start_swap_index, end_swap_index):
-        mapping_index = source.index(source_gene)
+    def swapGenesInSequence(self, parent1, parent2, target, source_gene, target_gene, start_swap_index, end_swap_index):
+        mapping_index = parent1.genes.index(target_gene)
         if mapping_index < start_swap_index or mapping_index >= end_swap_index:
-            target[mapping_index] = target_gene
+            target[mapping_index] = source_gene
         else:
-            self.swapGenesInSequence(source, target, target_gene, source.index(target_gene), start_swap_index, end_swap_index)
+            self.swapGenesInSequence(parent1, parent2, target, source_gene, parent2.genes[parent1.genes.index(target_gene)], start_swap_index, end_swap_index)
 
         return target
 
@@ -222,8 +234,9 @@ class BasicTSP:
         Updating the mating pool before creating a new generation
         """
         self.matingPool = []
-        for ind_i in self.population:
-            self.matingPool.append( ind_i.copy() )
+        self.stochasticUniversalSampling()
+        # for ind_i in self.population:
+        #     self.matingPool.append( ind_i.copy() )
 
     def newGeneration(self):
         """
@@ -239,12 +252,11 @@ class BasicTSP:
             2. Apply Crossover
             3. Apply Mutation
             """
-            self.stochasticUniversalSampling()
+            # self.stochasticUniversalSampling()
             indA, indB = self.randomSelection()
             childA, childB = self.pmxCrossover(indA, indB)
             self.mutation(childA)
             self.mutation(childB)
-
 
     def GAStep(self):
         """
@@ -279,5 +291,5 @@ if __name__ == "__main__":
     problem_file = sys.argv[1]
 
     # ga = BasicTSP(sys.argv[1], 300, 0.1, 500)
-    ga = BasicTSP(sys.argv[1], 5, 0.1, 500)
+    ga = BasicTSP(sys.argv[1], 5, 0.1, 100)
     ga.search()
