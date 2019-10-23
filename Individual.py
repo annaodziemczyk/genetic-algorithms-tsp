@@ -20,10 +20,14 @@ class Individual:
         self.data       = _data
         self.initialSolutionType = _initialSolutionType
 
+        # print("start init")
         if _initialSolutionType == GA.InitialSolutionType.HEURISTIC:
             self.nearestNeighbourGeneration()
         else:
             self.randomGeneration()
+            self.computeFitness()
+
+        # print("end init")
 
     def randomGeneration(self):
         self.genes = list(self.data.keys())
@@ -56,6 +60,7 @@ class Individual:
 
             if i == len(cities) - 1:
                 self.genes.append(cities[closest_city])
+                self.fitness += shortest_distance
                 current = closest_city
                 visited.append(closest_city)
                 i = 0

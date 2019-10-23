@@ -2,29 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b9101cbd-4021-4066-8ecb-2afa88eac1f5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/GA.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Individual.py" beforeDir="false" afterPath="$PROJECT_DIR$/Individual.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TSP_R00132719.py" beforeDir="false" afterPath="$PROJECT_DIR$/TSP_R00132719.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-0.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-1.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-10.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-11.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-12.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-13.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-14.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-15.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-17.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-18.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-19.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-2.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-20.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-3.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-5.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-7.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-8.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/inst-9.tsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSPdata/test.tsp" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,19 +17,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TSP_R00132719.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="140" column="33" selection-start-line="140" selection-start-column="33" selection-end-line="140" selection-end-column="33" />
+            <state relative-caret-position="225">
+              <caret line="418" column="91" selection-start-line="418" selection-start-column="91" selection-end-line="418" selection-end-column="91" />
               <folding>
-                <element signature="e#86#99#0" expanded="true" />
+                <element signature="e#112#121#0" expanded="true" />
                 <element signature="e#1967#2200#0" />
-                <element signature="e#2253#3187#0" />
-                <element signature="e#3607#4892#0" />
-                <element signature="e#5023#5395#0" />
-                <element signature="e#5453#5833#0" />
                 <element signature="e#5882#6285#0" />
                 <element signature="e#6332#7102#0" />
                 <element signature="e#7141#7593#0" />
-                <element signature="e#8557#8769#0" />
               </folding>
             </state>
           </provider>
@@ -76,8 +51,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Individual.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="86">
-              <caret line="58" column="18" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="18" />
+            <state relative-caret-position="147">
+              <caret line="27" selection-start-line="27" selection-end-line="27" />
               <folding>
                 <element signature="e#49#62#0" expanded="true" />
               </folding>
@@ -123,7 +98,13 @@
       <find>st</find>
       <find>sto</find>
       <find>iteration:</find>
+      <find>It</find>
+      <find>Iteration:</find>
       <find>uniform</find>
+      <find>Best Sol</find>
+      <find>start</find>
+      <find>Best initial sol</find>
+      <find>iteration</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -140,14 +121,14 @@
         <option value="$PROJECT_DIR$/TSPdata/SelectionType.py" />
         <option value="$PROJECT_DIR$/SelectionType.py" />
         <option value="$PROJECT_DIR$/TSPdata/GA.py" />
-        <option value="$PROJECT_DIR$/Individual.py" />
         <option value="$PROJECT_DIR$/GA.py" />
+        <option value="$PROJECT_DIR$/Individual.py" />
         <option value="$PROJECT_DIR$/TSP_R00132719.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1910" />
+    <option name="width" value="1892" />
     <option name="height" value="1149" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -241,14 +222,21 @@
       <option name="project" value="LOCAL" />
       <updated>1571777847971</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="uniform order-based crossover">
+      <created>1571792267118</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1571792267118</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1528" height="919" extended-state="0" />
+    <frame x="0" y="0" width="1513" height="919" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2535211" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25609756" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -288,7 +276,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="updates" />
+    <MESSAGE value="uniform order-based crossover" />
+    <option name="LAST_COMMIT_MESSAGE" value="uniform order-based crossover" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -326,6 +315,21 @@
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
+        <expression-string>len(set(individual.genes))</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>set(individual.genes)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>len(individual.genes)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>childAMap.values()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
@@ -352,21 +356,6 @@
       </expression>
       <expression>
         <expression-string>self.genes</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>len(self.genes)</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>visited</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>cities.get(current)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -451,16 +440,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Individual.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="86">
-          <caret line="58" column="18" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="18" />
-          <folding>
-            <element signature="e#49#62#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GA.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -468,21 +447,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Individual.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
+          <folding>
+            <element signature="e#49#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TSP_R00132719.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="140" column="33" selection-start-line="140" selection-start-column="33" selection-end-line="140" selection-end-column="33" />
+        <state relative-caret-position="225">
+          <caret line="418" column="91" selection-start-line="418" selection-start-column="91" selection-end-line="418" selection-end-column="91" />
           <folding>
-            <element signature="e#86#99#0" expanded="true" />
+            <element signature="e#112#121#0" expanded="true" />
             <element signature="e#1967#2200#0" />
-            <element signature="e#2253#3187#0" />
-            <element signature="e#3607#4892#0" />
-            <element signature="e#5023#5395#0" />
-            <element signature="e#5453#5833#0" />
             <element signature="e#5882#6285#0" />
             <element signature="e#6332#7102#0" />
             <element signature="e#7141#7593#0" />
-            <element signature="e#8557#8769#0" />
           </folding>
         </state>
       </provider>

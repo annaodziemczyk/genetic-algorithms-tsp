@@ -9,20 +9,27 @@ Rename this file to TSP_x.py where x is your student number
 import GA
 from Individual import *
 import sys
+import logging
 
 # R00132719
 myStudentNum = 132719 # Replace 12345 with your student number
 random.seed(myStudentNum)
 
 class BasicTSP:
-    def __init__(self, _fName, _popSize, _mutationRate, _maxIterations, _selectionType, _initialSolutionType, _crossoverType, _mutationType):
+    def __init__(self, _fName, _popSize, _mutationRate, _maxIterations, _selectionType, _initialSolutionType, _crossoverType, _mutationType, _logLevel=logging.DEBUG):
         """
         Parameters and general variables
         """
+        self.logger = logging.getLogger('GA')
+        self.logger.setLevel(_logLevel)
+        ch = logging.StreamHandler()
+        ch.setLevel(logging.DEBUG)
+        self.logger.addHandler(ch)
 
         self.population     = []
         self.matingPool     = []
         self.best           = None
+        self.bestFitness = None
         self.popSize        = _popSize
         self.genSize        = None
         self.mutationRate   = _mutationRate
@@ -57,19 +64,23 @@ class BasicTSP:
         """
         for i in range(0, self.popSize):
             individual = Individual(self.genSize, self.data, self.initialSolutionType)
-            individual.computeFitness()
             self.population.append(individual)
 
-        self.best = self.population[0].copy()
+        # self.best = self.population[0].copy()
+        self.bestFitness = self.population[0].getFitness()
         for ind_i in self.population:
-            if self.best.getFitness() > ind_i.getFitness():
-                self.best = ind_i.copy()
-        print ("Best initial sol: ", self.best.getFitness())
+            if self.bestFitness > ind_i.getFitness():
+                # self.best = ind_i.copy()
+                self.bestFitness = ind_i.getFitness()
+        # print ("Best initial sol: ", self.best.getFitness())
+        print ("Best initial sol: ", self.bestFitness)
+
 
     def updateBest(self, candidate):
-        if self.best == None or candidate.getFitness() < self.best.getFitness():
-            self.best = candidate.copy()
-            print ("iteration: ",self.iteration, "best: ",self.best.getFitness())
+        if self.bestFitness == None or candidate.getFitness() < self.bestFitness:
+            self.bestFitness = candidate.getFitness()
+            # self.best = candidate.copy()
+            # print ("iteration: ",self.iteration, "best: ",self.best.getFitness())
 
     def randomSelection(self):
         """
@@ -83,11 +94,12 @@ class BasicTSP:
         """
         Your stochastic universal sampling Selection Implementation
         """
+        # print("start sampling")
         total_fitness = sum(individual.getFitness() for individual in self.population)
         point_distance = total_fitness / 2
         start_point = random.uniform(0, point_distance)
         points = [start_point + i * point_distance for i in range(self.popSize)]
-
+        # print("finish sampling")
 
         parents = set()
         while len(parents) < self.popSize:
@@ -156,6 +168,7 @@ class BasicTSP:
         return list(childAMap.values())
 
     def pmxCrossover(self, indA, indB):
+        # print("start crossover")
         """
         Your PMX Crossover Implementation
         """
@@ -184,6 +197,7 @@ class BasicTSP:
             if childA.genes[i] not in childB.genes[gene_range[0]:gene_range[1]]:
                 childB = self.swapGenesInSequence(indB, indA, childB, childA.genes[i], childB.genes[i], gene_range[0], gene_range[1])
 
+        # print("send crossover")
         return childA, childB
 
     def swapGenesInSequence(self, parent1, parent2, target, source_gene, target_gene, start_swap_index, end_swap_index):
@@ -196,6 +210,7 @@ class BasicTSP:
         return target
 
     def reciprocalExchangeMutation(self, ind):
+        # print("start mutation")
         """
         Your Reciprocal Exchange Mutation implementation
         """
@@ -207,6 +222,7 @@ class BasicTSP:
 
         ind.computeFitness()
         self.updateBest(ind)
+        # print("finish mutation")
 
     def inversionMutation(self, ind):
         """
@@ -326,11 +342,14 @@ class BasicTSP:
         """
         self.iteration = 0
         while self.iteration < self.maxIterations:
+            self.logger.debug("iteration " + str(self.iteration))
             self.GAStep()
             self.iteration += 1
 
-        print ("Total iterations: ",self.iteration)
-        print ("Best Solution: ", self.best.getFitness())
+        # print ("Total iterations: ",self.iteration)
+        # print ("Best Solution: ", self.best.getFitness())
+        print ("Best Solution: ", self.bestFitness)
+
 
 if len(sys.argv) < 2:
     print ("Error - Incorrect input")
@@ -339,64 +358,68 @@ if len(sys.argv) < 2:
 
 
 if __name__ == "__main__":
+
     # problem_file = sys.argv[1]
     # ga = BasicTSP(sys.argv[1], 300, 0.1, 500)
 
-    files = ["TSPdata\inst-4.tsp", "TSPdata\inst-6.tsp", "TSPdata\inst-16.tsp"]
-    population_sizes = [100, 200, 300, 400]
-    mutation_rates = [0.1, 0.2, 0.3, 0.4]
-    number_of_test_iterations = 5
-    no_of_iterations = 500
+    # files = ["TSPdata\inst-4.tsp", "TSPdata\inst-6.tsp", "TSPdata\inst-16.tsp"]
+    # population_sizes = [100, 200, 300, 400]
+    # mutation_rates = [0.1, 0.2, 0.3, 0.4]
+    # number_of_test_iterations = 5
+    # no_of_iterations = 500
 
-    # files = ["TSPdata\inst-4.tsp"]
-    # population_sizes = [10]
-    # mutation_rates = [0.1]
-    # number_of_test_iterations = 1
-    # no_of_iterations = 100
+    files = ["TSPdata\inst-4.tsp"]
+    population_sizes = [10]
+    mutation_rates = [0.1]
+    number_of_test_iterations = 5
+    no_of_iterations = 200
 
     for filename in files:
         for population_size in population_sizes:
             for mutation_rate in mutation_rates:
-                print("File name: " + filename)
-                print("Population size: " + str(population_size))
-                print("Mutation rate: " + str(mutation_rate))
                 for test in range(0, number_of_test_iterations):
-                    print(">>>>>>>>>>>>>>> Configuration 1 <<<<<<<<<<<<<<<<<<<<<<<")
-                    ga = BasicTSP(filename, population_size, mutation_rate, no_of_iterations, GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM,
-                                  GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION)
-                    ga.search()
+                    print("File name: " + filename)
+                    print("Population size: " + str(population_size))
+                    print("Mutation rate: " + str(mutation_rate))
+                    print("Run: " + str(test + 1))
+                    print ("Total iterations: ", str(no_of_iterations))
 
-                    print(">>>>>>>>>>>>>>> Configuration 2 <<<<<<<<<<<<<<<<<<<<<<<")
-                    ga = BasicTSP(filename, population_size, mutation_rate, no_of_iterations, GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM,
-                                  GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE)
-                    ga.search()
+                    # print(">>>>>>>>>>>>>>> Configuration 1 <<<<<<<<<<<<<<<<<<<<<<<")
+                    # ga = BasicTSP(filename, population_size, mutation_rate, no_of_iterations, GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM,
+                    #               GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION)
+                    # ga.search()
 
-                    print(">>>>>>>>>>>>>>> Configuration 3 <<<<<<<<<<<<<<<<<<<<<<<")
-                    ga = BasicTSP(filename, population_size, mutation_rate, no_of_iterations, GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-                                  GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.RECIPROCAL_EXCHANGE)
-                    ga.search()
+                    # print(">>>>>>>>>>>>>>> Configuration 2 <<<<<<<<<<<<<<<<<<<<<<<")
+                    # ga = BasicTSP(filename, population_size, mutation_rate, no_of_iterations, GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM,
+                    #               GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE)
+                    # ga.search()
 
-                    print(">>>>>>>>>>>>>>> Configuration 4 <<<<<<<<<<<<<<<<<<<<<<<")
-                    ga = BasicTSP(filename, population_size, mutation_rate, no_of_iterations, GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-                                  GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE)
-                    ga.search()
+                    # print(">>>>>>>>>>>>>>> Configuration 3 <<<<<<<<<<<<<<<<<<<<<<<")
+                    # ga = BasicTSP(filename, population_size, mutation_rate, no_of_iterations, GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
+                    #               GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.RECIPROCAL_EXCHANGE)
+                    # ga.search()
 
-                    print(">>>>>>>>>>>>>>> Configuration 5 <<<<<<<<<<<<<<<<<<<<<<<")
-                    ga = BasicTSP(filename, population_size, mutation_rate, no_of_iterations, GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-                                  GA.CrossoverType.PMX, GA.MutationType.INVERSION_MUTATION)
-                    ga.search()
+                    # print(">>>>>>>>>>>>>>> Configuration 4 <<<<<<<<<<<<<<<<<<<<<<<")
+                    # ga = BasicTSP(filename, population_size, mutation_rate, no_of_iterations, GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
+                    #               GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE)
+                    # ga.search()
+                    #
+                    # print(">>>>>>>>>>>>>>> Configuration 5 <<<<<<<<<<<<<<<<<<<<<<<")
+                    # ga = BasicTSP(filename, population_size, mutation_rate, no_of_iterations, GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
+                    #               GA.CrossoverType.PMX, GA.MutationType.INVERSION_MUTATION)
+                    # ga.search()
 
-                    print(">>>>>>>>>>>>>>> Configuration 6 <<<<<<<<<<<<<<<<<<<<<<<")
-                    ga = BasicTSP(filename, population_size, mutation_rate, no_of_iterations, GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-                                  GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION)
-                    ga.search()
+                    # print(">>>>>>>>>>>>>>> Configuration 6 <<<<<<<<<<<<<<<<<<<<<<<")
+                    # ga = BasicTSP(filename, population_size, mutation_rate, no_of_iterations, GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
+                    #               GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION)
+                    # ga.search()
 
                     print(">>>>>>>>>>>>>>> Configuration 7 <<<<<<<<<<<<<<<<<<<<<<<")
                     ga = BasicTSP(filename, population_size, mutation_rate, no_of_iterations, GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
                                   GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE)
                     ga.search()
 
-                    print(">>>>>>>>>>>>>>> Configuration 8 <<<<<<<<<<<<<<<<<<<<<<<")
-                    ga = BasicTSP(filename, population_size, mutation_rate, no_of_iterations, GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
-                              GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION)
-                    ga.search()
+                    # print(">>>>>>>>>>>>>>> Configuration 8 <<<<<<<<<<<<<<<<<<<<<<<")
+                    # ga = BasicTSP(filename, population_size, mutation_rate, no_of_iterations, GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
+                    #           GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION)
+                    # ga.search()
