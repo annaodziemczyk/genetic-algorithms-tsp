@@ -7,11 +7,10 @@ file: Individual.py
 
 import random
 import math
-import copy
-
+import GA
 
 class Individual:
-    def __init__(self, _size, _data):
+    def __init__(self, _size, _data, _initialSolutionType):
         """
         Parameters and general variables
         """
@@ -19,9 +18,12 @@ class Individual:
         self.genes      = []
         self.genSize    = _size
         self.data       = _data
+        self.initialSolutionType = _initialSolutionType
 
-        self.nearestNeighbourGeneration()
-        # self.randomGeneration()
+        if _initialSolutionType == GA.InitialSolutionType.HEURISTIC:
+            self.nearestNeighbourGeneration()
+        else:
+            self.randomGeneration()
 
     def randomGeneration(self):
         self.genes = list(self.data.keys())
@@ -75,7 +77,7 @@ class Individual:
         """
         Creating a new individual
         """
-        ind = Individual(self.genSize, self.data)
+        ind = Individual(self.genSize, self.data, self.initialSolutionType)
         for i in range(0, self.genSize):
             ind.genes[i] = self.genes[i]
         ind.fitness = self.getFitness()
