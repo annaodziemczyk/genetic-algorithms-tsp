@@ -8,26 +8,37 @@ file: Individual.py
 import random
 import math
 import GA
+import uuid
 
 class Individual:
     def __init__(self, _size, _data, _initialSolutionType):
         """
         Parameters and general variables
         """
+        self.id = uuid.uuid4()
         self.fitness    = 0
         self.genes      = []
         self.genSize    = _size
         self.data       = _data
         self.initialSolutionType = _initialSolutionType
 
-        # print("start init")
         if _initialSolutionType == GA.InitialSolutionType.HEURISTIC:
             self.nearestNeighbourGeneration()
         else:
             self.randomGeneration()
             self.computeFitness()
 
-        # print("end init")
+    def __str__(self):
+        return str(self.getFitness())
+
+    def __lt__(self, other):
+        return self.getFitness() < other.getFitness()
+
+    # def __eq__(self, other):
+    #     return self.id == other.id
+
+    def __gt__(self, other):
+        return self.getFitness() > other.getFitness()
 
     def randomGeneration(self):
         self.genes = list(self.data.keys())

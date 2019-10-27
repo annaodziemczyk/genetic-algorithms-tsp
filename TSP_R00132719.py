@@ -12,6 +12,7 @@ import sys
 import logging
 from Configuration import *
 from Profiler import profile
+import heapq
 
 # R00132719
 myStudentNum = 132719 # Replace 12345 with your student number
@@ -36,8 +37,10 @@ class BasicTSP:
         self.logger.addHandler(ch)
 
         self.population     = []
+        self.newpopulation  = []
         self.matingPool     = []
-        self.best           = None
+        self.bestFitness    = None
+        self.bestFitness    = None
         self.popSize        = _popSize
         self.genSize        = None
         self.mutationRate   = _mutationRate
@@ -71,19 +74,25 @@ class BasicTSP:
         """
         for i in range(0, self.popSize):
             individual = Individual(self.genSize, self.data, self.initialSolutionType)
-            self.population.append(individual)
+            heapq.heappush(self.population, individual)
 
-        self.best = self.population[0].copy()
-        for ind_i in self.population:
-            if self.best.getFitness() > ind_i.getFitness():
-                self.best = ind_i.copy()
-        print ("Best initial sol: ", self.best.getFitness())
+        self.bestFitness = self.bestFitness
+
+        print ("Best initial sol: ", self.population[0].getFitness())
 
 
     def updateBest(self, candidate):
-        if self.best.getFitness() == None or candidate.getFitness() < self.best.getFitness():
-            self.best = candidate.copy()
-            print ("iteration: ",self.iteration, "best: ",self.best.getFitness())
+        newpopulation_size = len(self.newpopulation)
+
+        if newpopulation_size == self.popSize:
+            heapq.heapreplace(self.newpopulation, candidate)
+        else:
+            heapq.heappush(self.newpopulation, candidate)
+
+        if self.bestFitness == None or candidate.getFitness() < self.bestFitness:
+            # self.best = candidate.copy()
+            self.bestFitness = candidate.getFitness()
+            print ("iteration: ",self.iteration, "best: ",self.bestFitness)
 
     def randomSelection(self):
         """
@@ -98,30 +107,99 @@ class BasicTSP:
         """
         Your stochastic universal sampling Selection Implementation
         """
+        # Calculate total fitness of population
         total_fitness = sum(individual.getFitness() for individual in self.population)
-        point_distance = total_fitness / 2
+        # Calculate distance between the pointers
+        point_distance = total_fitness / self.popSize
         start_point = random.uniform(0, point_distance)
+        population = list(self.population)
+        # random.shuffle(population)
         points = [start_point + i * point_distance for i in range(self.popSize)]
-        pointsSize = len(points)
-
+        # index = 0
+        # subset_sum = 0
         parents = set()
-        parents_count = 0
 
-        while parents_count < self.popSize:
-            random.shuffle(self.population)
+        while len(parents) < self.popSize:
+            random.shuffle(population)
             i = 0
-            while i < pointsSize and parents_count < self.popSize:
+            while i < self.popSize and len(parents) < self.popSize:
                 j = 0
                 subset_sum = 0
                 while j < self.popSize:
-                    subset_sum += self.population[j].fitness
+                    subset_sum = population[j].getFitness()
                     if subset_sum > points[i]:
-                        parents.add(self.population[j])
-                        parents_count += 1
+                        parents.add(population[j])
                         break
                     j += 1
                 i += 1
-            parents_count = len(parents)
+
+        # for i in range(0, self.popSize):
+        #     # Determine pointer to a segment in the population
+        #     pointer = start_point + i * point_distance
+        #
+        #     # Find segment, which corresponds to the pointer
+        #     if subset_sum >= pointer:
+        #         parent_indices.add(index)
+        #     else:
+        #         for j in range(index+1, self.popSize):
+        #             index = j
+        #             subset_sum += population[index].getFitness()
+        #             if subset_sum >= pointer:
+        #                 parent_indices.add(index)
+        #                 break
+
+        # parents_count = 0
+        # points = [start_point + i * point_distance for i in range(self.popSize)]
+        # while parents_count < self.popSize:
+        #     random.shuffle(population)
+        #     i = 0
+        #     while i < self.popSize and parents_count < self.popSize:
+        #         j = 0
+        #         subset_sum = 0
+        #         while j < self.popSize:
+        #             subset_sum += population[j].fitness
+        #             if subset_sum > points[i]:
+        #                 parents.add(population[j])
+        #                 parents_count += 1
+        #                 break
+        #             j += 1
+        #         i += 1
+        #     parents_count = len(parents)
+
+
+        # total_fitness = sum(individual.getFitness() for individual in self.population)
+        # point_distance = total_fitness / self.popSize
+        # start_point = random.uniform(0, point_distance)
+        # points = [start_point + i * point_distance for i in range(self.popSize)]
+        #
+        # parents = set()
+        # population = list(self.population)
+        # subset_sum = 0
+        # parents_count = 0
+        # i = 0
+        # #
+        # # for candidate in population:
+        # #     subset_sum += candidate.getFitness()
+        # #     while subset_sum > start_point + 1:
+        # #         i += 1
+        # #         parents.add(candidate)
+
+
+        # while parents_count < self.popSize:
+        #     random.shuffle(population)
+        #     i = 0
+        #     while i < self.popSize and parents_count < self.popSize:
+        #         j = 0
+        #         subset_sum = 0
+        #         while j < self.popSize:
+        #             subset_sum += population[j].fitness
+        #             if subset_sum > points[i]:
+        #                 parents.add(population[j])
+        #                 parents_count += 1
+        #                 break
+        #             j += 1
+        #         i += 1
+        #     parents_count = len(parents)
 
         self.matingPool = list(parents)
 
@@ -249,8 +327,6 @@ class BasicTSP:
         """
         Executes a 1 order crossover and returns a new individual
         """
-
-        self.updateStartTime()
         child = []
         tmp = {}
 
@@ -272,8 +348,6 @@ class BasicTSP:
 
         child_individual = indB.copy()
         child_individual.setGene(child)
-
-        self.printExecutionTime("crossover")
 
         return child_individual
 
@@ -312,8 +386,6 @@ class BasicTSP:
         2. Crossover
         3. Mutation
         """
-        newpopulation = []
-
         for i in range(0, self.popSize):
             """
             Depending of your experiment you need to use the most suitable algorithms for:
@@ -321,7 +393,6 @@ class BasicTSP:
             2. Apply Crossover
             3. Apply Mutation
             """
-            # self.stochasticUniversalSampling()
             indA, indB = self.randomSelection()
             childA, childB = None, None
 
@@ -332,16 +403,17 @@ class BasicTSP:
 
             if self.mutationType == GA.MutationType.INVERSION_MUTATION:
                 self.inversionMutation(childA)
-                newpopulation.append(self.best)
                 self.inversionMutation(childB)
-                newpopulation.append(self.best)
             elif self.mutationType == GA.MutationType.RECIPROCAL_EXCHANGE:
                 self.reciprocalExchangeMutation(childA)
-                newpopulation.append(self.best)
                 self.reciprocalExchangeMutation(childB)
-                newpopulation.append(self.best)
 
-        # self.population = newpopulation
+        if self.newpopulation[0].getFitness() == self.bestFitness:
+            self.best = self.newpopulation[0].copy
+        else:
+            self.best = self.population[0].copy()
+
+        self.population = self.newpopulation[0:self.popSize]
 
     def GAStep(self):
         """
@@ -365,6 +437,7 @@ class BasicTSP:
             self.iteration += 1
 
         # print ("Total iterations: ",self.iteration)
+
         print ("Best Solution: ", self.best.getFitness())
 
 
@@ -383,10 +456,10 @@ if len(sys.argv) < 2:
 # no_of_iterations = 500
 
 files = ["TSPdata\inst-4.tsp"]
-population_sizes = [100]
+population_sizes = [10]
 mutation_rates = [0.1]
 number_of_test_iterations = 5
-no_of_iterations = 500
+no_of_iterations = 10
 
 # configurations = dict({
 #     "1": Configuration(GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION),
@@ -406,21 +479,22 @@ no_of_iterations = 500
 # })
 
 configurations = dict({
-        "1": Configuration(GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION)
-
+    "1": Configuration(GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.UNIFORM_ORDER_BASED,
+                       GA.MutationType.INVERSION_MUTATION)
 })
 
 for filename in files:
     for population_size in population_sizes:
         for mutation_rate in mutation_rates:
-            for test in range(0, number_of_test_iterations):
+            for key, config in configurations.items():
                 print("File name: " + filename)
                 print("Population size: " + str(population_size))
                 print("Mutation rate: " + str(mutation_rate))
-                print("Run: " + str(test + 1))
                 print ("Total iterations: ", str(no_of_iterations))
 
-                for key, config in configurations.items():
-                    print(">>>>>>>>>>>>>>> Configuration " + key + " <<<<<<<<<<<<<<<<<<<<<<<")
+                print(">>>>>>>>>>>>>>> Configuration " + key + " <<<<<<<<<<<<<<<<<<<<<<<")
+
+                for test in range(0, number_of_test_iterations):
+                    print("Run: " + str(test + 1))
                     ga = BasicTSP(filename, population_size, mutation_rate, no_of_iterations, config)
                     ga.search()

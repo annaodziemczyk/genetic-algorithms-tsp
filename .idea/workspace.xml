@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b9101cbd-4021-4066-8ecb-2afa88eac1f5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Configuration.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Profiler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Individual.py" beforeDir="false" afterPath="$PROJECT_DIR$/Individual.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TSP_R00132719.py" beforeDir="false" afterPath="$PROJECT_DIR$/TSP_R00132719.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,11 +17,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TSP_R00132719.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="343" column="25" selection-start-line="343" selection-start-column="10" selection-end-line="343" selection-end-column="25" />
+            <state relative-caret-position="137">
+              <caret line="126" selection-start-line="126" selection-end-line="126" selection-end-column="30" />
               <folding>
                 <element signature="e#112#128#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/enum.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="138">
+              <caret line="325" selection-start-line="325" selection-end-line="325" />
             </state>
           </provider>
         </entry>
@@ -32,6 +40,15 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="102">
               <caret line="6" selection-start-line="6" selection-end-line="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/random.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="138">
+              <caret line="273" selection-start-line="273" selection-end-line="273" />
             </state>
           </provider>
         </entry>
@@ -66,8 +83,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Individual.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="12" selection-end-column="59" />
+            <state relative-caret-position="153">
+              <caret line="36" selection-start-line="36" selection-end-line="37" selection-end-column="36" />
               <folding>
                 <element signature="e#49#62#0" expanded="true" />
               </folding>
@@ -109,7 +126,6 @@
       <find>fitness</find>
       <find>pmxCrossover</find>
       <find>updateBest</find>
-      <find>matingPool</find>
       <find>st</find>
       <find>sto</find>
       <find>iteration:</find>
@@ -126,7 +142,13 @@
       <find>@profile</find>
       <find>population</find>
       <find>initPop</find>
+      <find>search</find>
+      <find>self.pop</find>
+      <find>self.popSize</find>
+      <find>self.newpopulation</find>
       <find>self.population</find>
+      <find>self.best</find>
+      <find>matingPool</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -144,9 +166,9 @@
         <option value="$PROJECT_DIR$/SelectionType.py" />
         <option value="$PROJECT_DIR$/TSPdata/GA.py" />
         <option value="$PROJECT_DIR$/GA.py" />
-        <option value="$PROJECT_DIR$/Individual.py" />
         <option value="$PROJECT_DIR$/Configuration.py" />
         <option value="$PROJECT_DIR$/Profiler.py" />
+        <option value="$PROJECT_DIR$/Individual.py" />
         <option value="$PROJECT_DIR$/TSP_R00132719.py" />
       </list>
     </option>
@@ -258,20 +280,27 @@
       <option name="project" value="LOCAL" />
       <updated>1571818042328</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="profiling">
+      <created>1572033403208</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1572033403208</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="934" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24983476" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.24983476" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32294264" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.59102243" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.33665836" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.48129675" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.45012468" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -284,13 +313,13 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.252505" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.24983476" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32569975" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.370229" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.41094148" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32294264" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.48129675" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.45012468" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -307,10 +336,23 @@
     <MESSAGE value="updates" />
     <MESSAGE value="uniform order-based crossover" />
     <MESSAGE value="logging" />
-    <option name="LAST_COMMIT_MESSAGE" value="logging" />
+    <MESSAGE value="profiling" />
+    <option name="LAST_COMMIT_MESSAGE" value="profiling" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/TSP_R00132719.py</url>
+          <line>203</line>
+          <option name="timeStamp" value="86" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/TSP_R00132719.py</url>
+          <line>110</line>
+          <option name="timeStamp" value="109" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -345,47 +387,47 @@
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
+        <expression-string>random.randint(0, self.popSize-1)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>range(self.popSize)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>[start_point + i * point_distance for i in range(self.popSize)]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>len(parents)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.matingPool[ random.randint(0, self.popSize-1) ]</expression-string>
+        <expression-string>points.sort()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>len(self.matingPool)</expression-string>
+        <expression-string>points[i]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.popSize</expression-string>
+        <expression-string>subset_sum</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>logging.DEBUG</expression-string>
+        <expression-string>self.newpopulation[0:self.popSize]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.logger.level</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>len(set(individual.genes))</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>set(individual.genes)</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>len(individual.genes)</expression-string>
+        <expression-string>self.population</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -405,13 +447,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5270">
           <caret line="310" selection-start-line="310" selection-end-line="310" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/random.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5202">
-          <caret line="314" selection-start-line="314" selection-end-line="314" />
         </state>
       </provider>
     </entry>
@@ -443,16 +478,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Individual.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="12" selection-end-column="59" />
-          <folding>
-            <element signature="e#49#62#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharmCE2018.3/system/python_stubs/-491348699/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="61914">
@@ -474,10 +499,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Individual.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="36" selection-start-line="36" selection-end-line="37" selection-end-column="36" />
+          <folding>
+            <element signature="e#49#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/enum.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="325" selection-start-line="325" selection-end-line="325" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/random.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="273" selection-start-line="273" selection-end-line="273" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TSP_R00132719.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="343" column="25" selection-start-line="343" selection-start-column="10" selection-end-line="343" selection-end-column="25" />
+        <state relative-caret-position="137">
+          <caret line="126" selection-start-line="126" selection-end-line="126" selection-end-column="30" />
           <folding>
             <element signature="e#112#128#0" expanded="true" />
           </folding>
