@@ -13,6 +13,7 @@ import logging
 from Configuration import *
 from Profiler import profile
 import heapq
+from DataAnalytics import *
 
 # R00132719
 myStudentNum = 132719 # Replace 12345 with your student number
@@ -115,6 +116,7 @@ class BasicTSP:
         population = list(self.population)
         # random.shuffle(population)
         points = [start_point + i * point_distance for i in range(self.popSize)]
+        points.sort()
         # index = 0
         # subset_sum = 0
         parents = set()
@@ -299,7 +301,7 @@ class BasicTSP:
         Your Reciprocal Exchange Mutation implementation
         """
         # pick 2 index numbers for gene swap
-        gene1_index, gene2_index = random.sample(range(0, len(ind.genes)), 2)
+        gene1_index, gene2_index = self.pickRandomGeneIndeces()
 
         # swap genes
         ind.genes[gene1_index], ind.genes[gene2_index] = ind.genes[gene2_index], ind.genes[gene1_index]
@@ -313,7 +315,8 @@ class BasicTSP:
         Your Inversion Mutation implementation
         """
         # pick 2 index numbers for gene positions
-        generange = random.sample(range(0, len(ind.genes)), 2)
+        indexA, indexB = self.pickRandomGeneIndeces()
+        generange = [indexA, indexB]
 
         generange.sort()
 
@@ -322,6 +325,15 @@ class BasicTSP:
 
         ind.computeFitness()
         self.updateBest(ind)
+
+    def pickRandomGeneIndeces(self):
+        if random.random() > self.mutationRate:
+            self.pickRandomGeneIndeces()
+
+        indexA = random.randint(0, self.genSize-1)
+        indexB = random.randint(0, self.genSize-1)
+
+        return indexA, indexB
 
     def crossover(self, indA, indB):
         """
@@ -351,21 +363,18 @@ class BasicTSP:
 
         return child_individual
 
-    def mutation(self, ind):
-        """
-        Mutate an individual by swaping two cities with certain probability (i.e., mutation rate)
-        """
-        if random.random() > self.mutationRate:
-            return
-        indexA = random.randint(0, self.genSize-1)
-        indexB = random.randint(0, self.genSize-1)
-
-        tmp = ind.genes[indexA]
-        ind.genes[indexA] = ind.genes[indexB]
-        ind.genes[indexB] = tmp
-
-        ind.computeFitness()
-        self.updateBest(ind)
+    # def mutation(self, ind):
+    #     """
+    #     Mutate an individual by swaping two cities with certain probability (i.e., mutation rate)
+    #     """
+    #     indexA, indexB = self.pickRandomGeneIndeces()
+    #
+    #     tmp = ind.genes[indexA]
+    #     ind.genes[indexA] = ind.genes[indexB]
+    #     ind.genes[indexB] = tmp
+    #
+    #     ind.computeFitness()
+    #     self.updateBest(ind)
 
     def updateMatingPool(self):
         """
@@ -446,7 +455,7 @@ if len(sys.argv) < 2:
     print ("Expecting python BasicTSP.py [instance] ")
     sys.exit(0)
 
-# problem_file = sys.argv[1]
+problem_file = sys.argv[1]
 # ga = BasicTSP(sys.argv[1], 300, 0.1, 500)
 
 # files = ["TSPdata\inst-4.tsp", "TSPdata\inst-6.tsp", "TSPdata\inst-16.tsp"]
@@ -455,7 +464,6 @@ if len(sys.argv) < 2:
 # number_of_test_iterations = 5
 # no_of_iterations = 500
 
-files = ["TSPdata\inst-4.tsp"]
 population_sizes = [10]
 mutation_rates = [0.1]
 number_of_test_iterations = 5
@@ -483,18 +491,19 @@ configurations = dict({
                        GA.MutationType.INVERSION_MUTATION)
 })
 
-for filename in files:
-    for population_size in population_sizes:
-        for mutation_rate in mutation_rates:
-            for key, config in configurations.items():
-                print("File name: " + filename)
-                print("Population size: " + str(population_size))
-                print("Mutation rate: " + str(mutation_rate))
-                print ("Total iterations: ", str(no_of_iterations))
+for population_size in population_sizes:
+    for mutation_rate in mutation_rates:
+        for key, config in configurations.items():
+            print("File name: " + problem_file)
+            print("Population size: " + str(population_size))
+            print("Mutation rate: " + str(mutation_rate))
+            print ("Total iterations: ", str(no_of_iterations))
 
-                print(">>>>>>>>>>>>>>> Configuration " + key + " <<<<<<<<<<<<<<<<<<<<<<<")
+            print(">>>>>>>>>>>>>>> Configuration " + key + " <<<<<<<<<<<<<<<<<<<<<<<")
 
-                for test in range(0, number_of_test_iterations):
-                    print("Run: " + str(test + 1))
-                    ga = BasicTSP(filename, population_size, mutation_rate, no_of_iterations, config)
-                    ga.search()
+            for test in range(0, number_of_test_iterations):
+                print("Run: " + str(test + 1))
+                ga = BasicTSP(problem_file, population_size, mutation_rate, no_of_iterations, config)
+                ga.search()
+
+da = DataAnalytics()
