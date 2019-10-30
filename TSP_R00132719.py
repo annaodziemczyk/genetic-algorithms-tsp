@@ -14,6 +14,7 @@ from Configuration import *
 from Profiler import profile
 import heapq
 from DataAnalytics import *
+import copy
 
 # R00132719
 myStudentNum = 132719 # Replace 12345 with your student number
@@ -56,6 +57,12 @@ class BasicTSP:
 
         self.readInstance()
         self.initPopulation()
+
+    def __str__(self):
+        return "\nFile name: " + self.fName \
+               + "\nPopulation size: " + str(self.popSize) \
+               + "\nMutation rate: " + str(self.mutationRate) \
+               + "\nTotal iterations: " + str(self.maxIterations)
 
     def readInstance(self):
         """
@@ -108,114 +115,25 @@ class BasicTSP:
         """
         Your stochastic universal sampling Selection Implementation
         """
-        # Calculate total fitness of population
-        total_fitness = sum(individual.getFitness() for individual in self.population)
-        # Calculate distance between the pointers
-        point_distance = total_fitness / self.popSize
-        start_point = random.uniform(0, point_distance)
+        F = sum(individual.getFitness() for individual in self.population)
+        N = self.popSize
+        P = F/N
+        start = random.uniform(0, P)
+        pointers = [start + i * P for i in range(0, N)]
         population = list(self.population)
-        # random.shuffle(population)
-        points = [start_point + i * point_distance for i in range(self.popSize)]
-        points.sort()
-        # index = 0
-        # subset_sum = 0
-        parents = set()
 
-        while len(parents) < self.popSize:
-            random.shuffle(population)
+        keep = []
+        for point in pointers:
             i = 0
-            while i < self.popSize and len(parents) < self.popSize:
-                j = 0
-                subset_sum = 0
-                while j < self.popSize:
-                    subset_sum = population[j].getFitness()
-                    if subset_sum > points[i]:
-                        parents.add(population[j])
-                        break
-                    j += 1
+            total = population[0].getFitness()
+            while total < point:
                 i += 1
+                total += population[i].getFitness()
 
-        # for i in range(0, self.popSize):
-        #     # Determine pointer to a segment in the population
-        #     pointer = start_point + i * point_distance
-        #
-        #     # Find segment, which corresponds to the pointer
-        #     if subset_sum >= pointer:
-        #         parent_indices.add(index)
-        #     else:
-        #         for j in range(index+1, self.popSize):
-        #             index = j
-        #             subset_sum += population[index].getFitness()
-        #             if subset_sum >= pointer:
-        #                 parent_indices.add(index)
-        #                 break
+            keep.append(population[i])
 
-        # parents_count = 0
-        # points = [start_point + i * point_distance for i in range(self.popSize)]
-        # while parents_count < self.popSize:
-        #     random.shuffle(population)
-        #     i = 0
-        #     while i < self.popSize and parents_count < self.popSize:
-        #         j = 0
-        #         subset_sum = 0
-        #         while j < self.popSize:
-        #             subset_sum += population[j].fitness
-        #             if subset_sum > points[i]:
-        #                 parents.add(population[j])
-        #                 parents_count += 1
-        #                 break
-        #             j += 1
-        #         i += 1
-        #     parents_count = len(parents)
+        self.matingPool = keep
 
-
-        # total_fitness = sum(individual.getFitness() for individual in self.population)
-        # point_distance = total_fitness / self.popSize
-        # start_point = random.uniform(0, point_distance)
-        # points = [start_point + i * point_distance for i in range(self.popSize)]
-        #
-        # parents = set()
-        # population = list(self.population)
-        # subset_sum = 0
-        # parents_count = 0
-        # i = 0
-        # #
-        # # for candidate in population:
-        # #     subset_sum += candidate.getFitness()
-        # #     while subset_sum > start_point + 1:
-        # #         i += 1
-        # #         parents.add(candidate)
-
-
-        # while parents_count < self.popSize:
-        #     random.shuffle(population)
-        #     i = 0
-        #     while i < self.popSize and parents_count < self.popSize:
-        #         j = 0
-        #         subset_sum = 0
-        #         while j < self.popSize:
-        #             subset_sum += population[j].fitness
-        #             if subset_sum > points[i]:
-        #                 parents.add(population[j])
-        #                 parents_count += 1
-        #                 break
-        #             j += 1
-        #         i += 1
-        #     parents_count = len(parents)
-
-        self.matingPool = list(parents)
-
-    # def uniformCrossover(self, indA, indB):
-    #     """
-    #     Your Uniform Crossover Implementation
-    #     """
-    #     swapprob = 0.5
-    #     size = min(len(indA.genes), len(indB.genes))
-    #     for i in range(size):
-    #         if random.random() < swapprob:
-    #             indA.genes[i], indB.genes[i] = indB.genes[i], indA.genes[i]
-    #
-    #     return indA, indB
 
     # @profile
     def uniformOrderBasedCrossover(self, indA, indB):
@@ -422,7 +340,13 @@ class BasicTSP:
         else:
             self.best = self.population[0].copy()
 
-        self.population = self.newpopulation[0:self.popSize]
+        # top 10 percent
+        ten_percent_index = int(len(self.newpopulation) * 0.01)
+        top = self.newpopulation[0:ten_percent_index]
+        remainder_of_population = self.newpopulation[ten_percent_index:self.popSize]
+        random.shuffle(remainder_of_population)
+        self.population = (top + remainder_of_population)[0:self.popSize]
+        self.population = self.population[0:self.popSize]
 
     def GAStep(self):
         """
@@ -459,51 +383,50 @@ problem_file = sys.argv[1]
 # ga = BasicTSP(sys.argv[1], 300, 0.1, 500)
 
 # files = ["TSPdata\inst-4.tsp", "TSPdata\inst-6.tsp", "TSPdata\inst-16.tsp"]
-# population_sizes = [100, 200, 300, 400]
+population_sizes = [100, 200, 300, 400]
+mutation_rates = [0.1, 0.2, 0.3, 0.4]
+number_of_test_iterations = 5
+no_of_iterations = 500
+
+# population_sizes = [10, 20, 30, 40]
 # mutation_rates = [0.1, 0.2, 0.3, 0.4]
 # number_of_test_iterations = 5
-# no_of_iterations = 500
+# no_of_iterations = 10
 
-population_sizes = [10]
-mutation_rates = [0.1]
-number_of_test_iterations = 5
-no_of_iterations = 10
+configurations = [
+    Configuration("1", GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.UNIFORM_ORDER_BASED,
+                       GA.MutationType.INVERSION_MUTATION),
+    Configuration("2", GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE)
+    Configuration("3", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
+                              GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.RECIPROCAL_EXCHANGE),
+    Configuration("4", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
+                              GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
+    Configuration("5", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
+                              GA.CrossoverType.PMX, GA.MutationType.INVERSION_MUTATION),
+    Configuration("6", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
+                              GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION),
 
-# configurations = dict({
-#     "1": Configuration(GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION),
-#     "2": Configuration(GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
-#     "3": Configuration(GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-#                               GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.RECIPROCAL_EXCHANGE),
-#     "4": Configuration(GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-#                               GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
-#     "5": Configuration(GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-#                               GA.CrossoverType.PMX, GA.MutationType.INVERSION_MUTATION),
-#     "6": Configuration(GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-#                               GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION),
-#     "7": Configuration(GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
-#                               GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
-#     "8": Configuration(GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
-#                           GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION),
-# })
+    Configuration("8", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
+                          GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION)
+]
 
-configurations = dict({
-    "1": Configuration(GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.UNIFORM_ORDER_BASED,
-                       GA.MutationType.INVERSION_MUTATION)
-})
+# Configuration("7", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
+#               GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
 
 for population_size in population_sizes:
     for mutation_rate in mutation_rates:
-        for key, config in configurations.items():
-            print("File name: " + problem_file)
-            print("Population size: " + str(population_size))
-            print("Mutation rate: " + str(mutation_rate))
-            print ("Total iterations: ", str(no_of_iterations))
-
-            print(">>>>>>>>>>>>>>> Configuration " + key + " <<<<<<<<<<<<<<<<<<<<<<<")
-
+        for config in configurations:
+            exp = Experiment(config, problem_file, no_of_iterations, mutation_rate, population_size)
             for test in range(0, number_of_test_iterations):
                 print("Run: " + str(test + 1))
                 ga = BasicTSP(problem_file, population_size, mutation_rate, no_of_iterations, config)
+                print(ga)
+                print(config)
                 ga.search()
+                exp.saveResult(str(test + 1), ga.best)
 
 da = DataAnalytics()
+da.drawChart("populationSize", {"mutationRate":mutation_rates[0]}, "Population size", "Effect of Population Size")
+da.drawChart("mutationRate", {"populationSize":population_sizes[0]}, "Mutation Rate", "Effect of Mutation Rate")
+da.drawChart("populationSize", {"mutationRate":mutation_rates[0], "mutation": GA.CrossoverType.UNIFORM_ORDER_BASED, "crossover":GA.MutationType.INVERSION_MUTATION}, "Population size", "Effect of Population Size")
+da.drawChart("mutationRate", {"populationSize":population_sizes[0], "mutation": GA.CrossoverType.UNIFORM_ORDER_BASED, "crossover":GA.MutationType.INVERSION_MUTATION}, "Mutation Rate", "Effect of Mutation Rate")

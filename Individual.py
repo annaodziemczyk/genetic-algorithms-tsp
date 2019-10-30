@@ -40,6 +40,12 @@ class Individual:
     def __gt__(self, other):
         return self.getFitness() > other.getFitness()
 
+    def __le__(self, other):
+        return self.getFitness() <= other.getFitness()
+
+    def __ge__(self, other):
+        return self.getFitness() >= other.getFitness()
+
     def randomGeneration(self):
         self.genes = list(self.data.keys())
 
