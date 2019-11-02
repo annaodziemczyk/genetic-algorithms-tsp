@@ -34,8 +34,8 @@ class Individual:
     def __lt__(self, other):
         return self.getFitness() < other.getFitness()
 
-    # def __eq__(self, other):
-    #     return self.id == other.id
+    def __eq__(self, other):
+        return self.getFitness() == other.getFitness()
 
     def __gt__(self, other):
         return self.getFitness() > other.getFitness()

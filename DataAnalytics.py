@@ -5,6 +5,8 @@ from Experiment import *
 import os
 import statistics
 import pandas as pd
+import numpy as np
+from tabulate import tabulate
 
 class DataAnalytics:
     def __init__(self):
@@ -44,6 +46,8 @@ class DataAnalytics:
 
 
         df = pd.DataFrame(filtered, columns = filtered[0].keys())
+        self.createTable(df, title)
+
         df_avg = df.groupby(property)[AVERAGE].agg('mean').reset_index()
         df_best = df.groupby(property)[BEST].agg('min').reset_index()
         df_worst = df.groupby(property)[WORST].agg('max').reset_index()
@@ -61,32 +65,40 @@ class DataAnalytics:
         plt.ylabel('Fitness')
         plt.show()
 
-        def drawChartByMutationType(self, property, constants, xLabel, title):
-            filtered = []
-            AVERAGE = "average"
-            BEST = "best"
-            WORST = "worst"
+    def createTable(self, df, file_name):
+        data_folder = Path("tables")
+        filename = file_name + ".txt"
+        file_to_save = data_folder / filename
+        f = open(file_to_save, "w+")
+        f.write(tabulate(df, tablefmt="pipe", headers="keys"))
+        f.close()
 
-            for exp in self.experiments:
-                keep = False
-                for key, value in constants.items():
-                    if getattr(exp, key) == value:
-                        keep = True
-                        break
-                if keep:
-                    cp = {}
-                    cp[property] = getattr(exp, property)
-                    cp[AVERAGE] = exp.calculateAverage()
-                    cp["mutation"] = str(exp.mutation)
-                    filtered.append(cp)
+    def drawChartByMutationType(self, property, constants, xLabel, title):
+        filtered = []
+        AVERAGE = "average"
+        BEST = "best"
+        WORST = "worst"
 
+        for exp in self.experiments:
+            keep = False
+            for key, value in constants.items():
+                if getattr(exp, key) == value:
+                    keep = True
+                    break
+            if keep:
+                cp = {}
+                cp[property] = getattr(exp, property)
+                cp[AVERAGE] = exp.calculateAverage()
+                cp["mutation"] = str(exp.mutation)
+                filtered.append(cp)
 
-            df = pd.DataFrame(filtered, columns = filtered[0].keys())
-            fig, ax = plt.subplots(figsize=(8, 6))
-            for label, df in df.groupby("mutation"):
-                df.average.plot(kind="line", ax=ax, label=label)
-            plt.legend()
-            plt.xlabel(xLabel)
-            plt.ylabel('Fitness')
-            plt.show()
+        df = pd.DataFrame(filtered, columns = filtered[0].keys())
+        self.createTable(df, title)
+        fig, ax = plt.subplots(figsize=(8, 6))
+        for label, df in df.groupby("mutation"):
+            df.average.plot(kind="line", ax=ax, label=label)
+        plt.legend()
+        plt.xlabel(xLabel)
+        plt.ylabel('Fitness')
+        plt.show()
 

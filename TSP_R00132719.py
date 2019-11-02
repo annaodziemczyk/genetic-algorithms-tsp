@@ -15,6 +15,7 @@ from Profiler import profile
 import heapq
 from DataAnalytics import *
 import copy
+import numpy as np
 
 # R00132719
 myStudentNum = 132719 # Replace 12345 with your student number
@@ -115,41 +116,56 @@ class BasicTSP:
         """
         Your stochastic universal sampling Selection Implementation
         """
-        F = sum(individual.getFitness() for individual in self.population)
+        sorted = heapq.nsmallest(self.popSize, range(self.popSize), self.population.__getitem__)
+        largest = heapq.nlargest(1, self.population)[0].getFitness() + 1
+        population = dict((i, largest - self.population[i].getFitness()) for i in sorted)
+
+        F = sum(population.values())
         N = self.popSize
         P = F/N
         start = random.uniform(0, P)
         pointers = [start + i * P for i in range(0, N)]
-        population = list(self.population)
+        total = 0
+        pointers.sort(reverse=True)
+
+        fitnessMeasures = list(population.values())
+        indeces = list(population.keys())
 
         keep = []
         for point in pointers:
             i = 0
-            total = population[0].getFitness()
+            total += fitnessMeasures[0]
             while total < point:
-                i += 1
-                total += population[i].getFitness()
+                if i+1 == self.popSize:
+                    total = F - total
+                else:
+                    i += 1
+                    total += fitnessMeasures[i]
 
-            keep.append(population[i])
+            keep.append(indeces[i])
 
-        self.matingPool = keep
-
+        self.matingPool = np.array(list(self.population))[keep]
 
     # @profile
     def uniformOrderBasedCrossover(self, indA, indB):
         size = min(len(indA.genes), len(indB.genes))
         template = [random.randint(0, 1) for _ in range(size)]
-        sortForChildA = []
-        sortForChildB = []
         unpopulated = []
 
-        i = 0
-        for binary_value in template:
-            if binary_value == 0:
-                unpopulated.append(i)
-                sortForChildA.append(indA.genes[i])
-                sortForChildB.append(indB.genes[i])
-            i += 1
+        for idx, val in enumerate(template):
+            if val == 0:
+                unpopulated.append(idx)
+
+        sortForChildA = np.array(indA.genes)[unpopulated]
+        sortForChildB = np.array(indB.genes)[unpopulated]
+
+        # i = 0
+        # for binary_value in template:
+        #     if binary_value == 0:
+        #         unpopulated.append(i)
+        #         sortForChildA.append(indA.genes[i])
+        #         sortForChildB.append(indB.genes[i])
+        #     i += 1
 
         sortForChildA = self.sortItems(sortForChildA, indB.genes)
         sortForChildB = self.sortItems(sortForChildB, indA.genes)
@@ -342,10 +358,8 @@ class BasicTSP:
 
         # top 10 percent
         ten_percent_index = int(len(self.newpopulation) * 0.01)
-        top = self.newpopulation[0:ten_percent_index]
-        remainder_of_population = self.newpopulation[ten_percent_index:self.popSize]
-        random.shuffle(remainder_of_population)
-        self.population = (top + remainder_of_population)[0:self.popSize]
+        top = heapq.nsmallest(ten_percent_index, self.newpopulation)
+        self.population = (top + self.newpopulation)[0:self.popSize]
         self.population = self.population[0:self.popSize]
 
     def GAStep(self):
@@ -382,7 +396,7 @@ if len(sys.argv) < 2:
 problem_file = sys.argv[1]
 # ga = BasicTSP(sys.argv[1], 300, 0.1, 500)
 
-# files = ["TSPdata\inst-4.tsp", "TSPdata\inst-6.tsp", "TSPdata\inst-16.tsp"]
+files = ["TSPdata\inst-4.tsp", "TSPdata\inst-6.tsp", "TSPdata\inst-16.tsp"]
 population_sizes = [100, 200, 300, 400]
 mutation_rates = [0.1, 0.2, 0.3, 0.4]
 number_of_test_iterations = 5
@@ -393,21 +407,23 @@ no_of_iterations = 500
 # number_of_test_iterations = 5
 # no_of_iterations = 10
 
-configurations = [
-    Configuration("1", GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.UNIFORM_ORDER_BASED,
-                       GA.MutationType.INVERSION_MUTATION),
-    Configuration("2", GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
-    Configuration("3", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-                              GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.RECIPROCAL_EXCHANGE),
-    Configuration("4", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-                              GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
-    Configuration("5", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-                              GA.CrossoverType.PMX, GA.MutationType.INVERSION_MUTATION),
-    Configuration("6", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-                              GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION),
 
-    Configuration("8", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
-                          GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION)
+configurations = [
+    # Configuration("1", GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.UNIFORM_ORDER_BASED,
+    #                    GA.MutationType.INVERSION_MUTATION)
+    Configuration("2", GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE)
+    # Configuration("3", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
+    #                           GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.RECIPROCAL_EXCHANGE),
+    # Configuration("4", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
+    #                           GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
+    # Configuration("5", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
+    #                           GA.CrossoverType.PMX, GA.MutationType.INVERSION_MUTATION),
+    # Configuration("6", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
+    #                           GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION),
+    # # Configuration("7", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
+    # #               GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
+    # Configuration("8", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
+    #                       GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION)
 ]
 
 # Configuration("7", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
@@ -428,5 +444,4 @@ for population_size in population_sizes:
 da = DataAnalytics()
 da.drawChart("populationSize", {"mutationRate":mutation_rates[0]}, "Population size", "Effect of Population Size")
 da.drawChart("mutationRate", {"populationSize":population_sizes[0]}, "Mutation Rate", "Effect of Mutation Rate")
-da.drawChart("populationSize", {"mutationRate":mutation_rates[0], "mutation": GA.CrossoverType.UNIFORM_ORDER_BASED, "crossover":GA.MutationType.INVERSION_MUTATION}, "Population size", "Effect of Population Size")
-da.drawChart("mutationRate", {"populationSize":population_sizes[0], "mutation": GA.CrossoverType.UNIFORM_ORDER_BASED, "crossover":GA.MutationType.INVERSION_MUTATION}, "Mutation Rate", "Effect of Mutation Rate")
+da.drawChartByMutationType("mutationRate", {"populationSize":population_sizes[0]}, "Mutation Rate", "Comparision of Mutation Strategies")
