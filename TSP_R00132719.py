@@ -391,7 +391,7 @@ problem_file = sys.argv[1]
 
 files = ["TSPdata\inst-4.tsp", "TSPdata\inst-6.tsp", "TSPdata\inst-16.tsp"]
 
-population_sizes = [200]
+population_sizes = [100]
 mutation_rates = [0.1]
 number_of_test_iterations = 5
 no_of_iterations = 500
@@ -410,7 +410,7 @@ no_of_iterations = 500
 configurations = [
     # Configuration("1", GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.UNIFORM_ORDER_BASED,
     #                    GA.MutationType.INVERSION_MUTATION)
-    Configuration("2", GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
+    # Configuration("2", GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
     # Configuration("3", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
     #                           GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.RECIPROCAL_EXCHANGE)
     # Configuration("4", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
@@ -419,8 +419,8 @@ configurations = [
     #                           GA.CrossoverType.PMX, GA.MutationType.INVERSION_MUTATION)
     # Configuration("6", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
     #                           GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION)
-    # Configuration("7", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
-    #               GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
+    Configuration("7", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
+                  GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
     # Configuration("8", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
     #                       GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION)
 ]

@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b9101cbd-4021-4066-8ecb-2afa88eac1f5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiment.py" beforeDir="false" afterPath="$PROJECT_DIR$/Experiment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Individual.py" beforeDir="false" afterPath="$PROJECT_DIR$/Individual.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TSP_R00132719.py" beforeDir="false" afterPath="$PROJECT_DIR$/TSP_R00132719.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/config1/Effect of Mutation Rate.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/1572715618.442497.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tables/config1/Comparision of Mutation Strategies.txt" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,7 +43,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Individual.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="121">
+            <state relative-caret-position="1445">
               <caret line="90" selection-start-line="90" selection-end-line="90" />
               <folding>
                 <element signature="e#49#62#0" expanded="true" />
@@ -90,8 +85,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TSP_R00132719.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="416" column="22" selection-start-line="416" selection-start-column="22" selection-end-line="416" selection-end-column="22" />
+            <state relative-caret-position="128">
+              <caret line="393" column="21" selection-start-line="393" selection-start-column="21" selection-end-line="393" selection-end-column="21" />
               <folding>
                 <element signature="e#112#128#0" expanded="true" />
               </folding>
@@ -180,7 +175,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-10" />
+    <option name="x" value="-8" />
     <option name="width" value="1895" />
     <option name="height" value="1150" />
   </component>
@@ -330,18 +325,26 @@
       <option name="project" value="LOCAL" />
       <updated>1572784727626</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="results">
+      <created>1572977322738</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1572977322738</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="1515" height="920" extended-state="0" />
+    <frame x="-6" y="0" width="1516" height="920" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49840257" visible="true" weight="0.255751" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49840257" visible="true" weight="0.2555781" />
       <window_info id="Structure" order="1" sideWeight="0.50159746" side_tool="true" weight="0.25592417" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32233503" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32741117" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32741117" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" />
@@ -381,7 +384,8 @@
     <MESSAGE value="profiling" />
     <MESSAGE value="plotting" />
     <MESSAGE value="tables and charts" />
-    <option name="LAST_COMMIT_MESSAGE" value="tables and charts" />
+    <MESSAGE value="results" />
+    <option name="LAST_COMMIT_MESSAGE" value="results" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -603,6 +607,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Individual.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1445">
+          <caret line="90" selection-start-line="90" selection-end-line="90" />
+          <folding>
+            <element signature="e#49#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$USER_HOME$/.PyCharmCE2018.3/system/python_stubs/-491348699/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="62101">
@@ -637,20 +651,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Individual.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="90" selection-start-line="90" selection-end-line="90" />
-          <folding>
-            <element signature="e#49#62#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TSP_R00132719.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="416" column="22" selection-start-line="416" selection-start-column="22" selection-end-line="416" selection-end-column="22" />
+        <state relative-caret-position="128">
+          <caret line="393" column="21" selection-start-line="393" selection-start-column="21" selection-end-line="393" selection-end-column="21" />
           <folding>
             <element signature="e#112#128#0" expanded="true" />
           </folding>
