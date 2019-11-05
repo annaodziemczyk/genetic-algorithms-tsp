@@ -3,6 +3,10 @@ from datetime import datetime
 from pathlib import Path
 import pickle
 
+"""
+Author: Anna Odziemczyk R00132719
+Class representing 
+"""
 class Experiment:
 
     DIR_NAME="results/"

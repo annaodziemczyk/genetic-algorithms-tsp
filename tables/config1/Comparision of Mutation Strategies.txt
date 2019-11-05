@@ -1,6 +1,0 @@
-|    |   mutationRate |     average | mutation                        |
-|---:|---------------:|------------:|:--------------------------------|
-|  0 |            0.1 | 2.37195e+07 | MutationType.INVERSION_MUTATION |
-|  1 |            0.2 | 2.34749e+07 | MutationType.INVERSION_MUTATION |
-|  2 |            0.3 | 2.34289e+07 | MutationType.INVERSION_MUTATION |
-|  3 |            0.4 | 2.36504e+07 | MutationType.INVERSION_MUTATION |

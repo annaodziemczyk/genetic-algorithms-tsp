@@ -42,8 +42,7 @@ class BasicTSP:
         self.population     = []
         self.newpopulation  = []
         self.matingPool     = []
-        self.bestFitness    = None
-        self.bestFitness    = None
+        self.best           = None
         self.popSize        = _popSize
         self.genSize        = None
         self.mutationRate   = _mutationRate
@@ -83,25 +82,21 @@ class BasicTSP:
         """
         for i in range(0, self.popSize):
             individual = Individual(self.genSize, self.data, self.initialSolutionType)
-            heapq.heappush(self.population, individual)
+            self.population.append(individual)
 
-        self.bestFitness = self.bestFitness
+        self.best = self.population[0].copy()
+        heapq.heapify(self.population)
 
-        print ("Best initial sol: ", self.population[0].getFitness())
+        print ("Best initial sol: ", self.best.getFitness())
 
 
     def updateBest(self, candidate):
-        newpopulation_size = len(self.newpopulation)
+        heapq.heappush(self.newpopulation, candidate)
 
-        if newpopulation_size == self.popSize:
-            heapq.heapreplace(self.newpopulation, candidate)
-        else:
-            heapq.heappush(self.newpopulation, candidate)
-
-        if self.bestFitness == None or candidate.getFitness() < self.bestFitness:
+        if self.best.getFitness() == None or candidate.getFitness() < self.best.getFitness():
             # self.best = candidate.copy()
-            self.bestFitness = candidate.getFitness()
-            print ("iteration: ",self.iteration, "best: ",self.bestFitness)
+            self.best = candidate.copy()
+            print ("iteration: ",self.iteration, "best: ", self.best.getFitness())
 
     def randomSelection(self):
         """
@@ -351,16 +346,14 @@ class BasicTSP:
                 self.reciprocalExchangeMutation(childA)
                 self.reciprocalExchangeMutation(childB)
 
-        if self.newpopulation[0].getFitness() == self.bestFitness:
-            self.best = self.newpopulation[0].copy
-        else:
-            self.best = self.population[0].copy()
-
         # top 10 percent
-        ten_percent_index = int(len(self.newpopulation) * 0.01)
-        top = heapq.nsmallest(ten_percent_index, self.newpopulation)
-        self.population = (top + self.newpopulation)[0:self.popSize]
-        self.population = self.population[0:self.popSize]
+        ten_percent_index = int(len(self.newpopulation) * 0.1)
+        self.population = []
+        for i in range(0, ten_percent_index):
+            self.population.append(heapq.heappop(self.newpopulation))
+
+        self.population = self.population + self.newpopulation[0:self.popSize-ten_percent_index]
+        heapq.heapify(self.population)
 
     def GAStep(self):
         """
@@ -372,7 +365,7 @@ class BasicTSP:
         self.updateMatingPool()
         self.newGeneration()
 
-    @profile
+    # @profile
     def search(self):
         """
         General search template.
@@ -397,10 +390,16 @@ problem_file = sys.argv[1]
 # ga = BasicTSP(sys.argv[1], 300, 0.1, 500)
 
 files = ["TSPdata\inst-4.tsp", "TSPdata\inst-6.tsp", "TSPdata\inst-16.tsp"]
-population_sizes = [100, 200, 300, 400]
-mutation_rates = [0.1, 0.2, 0.3, 0.4]
+
+population_sizes = [200]
+mutation_rates = [0.1]
 number_of_test_iterations = 5
 no_of_iterations = 500
+
+# population_sizes = [100, 200, 300, 400]
+# mutation_rates = [0.1, 0.2, 0.3, 0.4]
+# number_of_test_iterations = 5
+# no_of_iterations = 500
 
 # population_sizes = [10, 20, 30, 40]
 # mutation_rates = [0.1, 0.2, 0.3, 0.4]
@@ -411,17 +410,17 @@ no_of_iterations = 500
 configurations = [
     # Configuration("1", GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.UNIFORM_ORDER_BASED,
     #                    GA.MutationType.INVERSION_MUTATION)
-    # Configuration("2", GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE)
+    Configuration("2", GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
     # Configuration("3", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-    #                           GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.RECIPROCAL_EXCHANGE),
-    Configuration("4", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-                              GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE)
+    #                           GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.RECIPROCAL_EXCHANGE)
+    # Configuration("4", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
+    #                           GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE)
     # Configuration("5", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-    #                           GA.CrossoverType.PMX, GA.MutationType.INVERSION_MUTATION),
+    #                           GA.CrossoverType.PMX, GA.MutationType.INVERSION_MUTATION)
     # Configuration("6", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-    #                           GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION),
-    # # Configuration("7", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
-    # #               GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
+    #                           GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION)
+    # Configuration("7", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
+    #               GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
     # Configuration("8", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
     #                       GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION)
 ]
@@ -441,7 +440,7 @@ for population_size in population_sizes:
                 ga.search()
                 exp.saveResult(str(test + 1), ga.best)
 
-da = DataAnalytics()
-da.drawChart("populationSize", {"mutationRate":mutation_rates[0]}, "Population size", "Effect of Population Size")
-da.drawChart("mutationRate", {"populationSize":population_sizes[0]}, "Mutation Rate", "Effect of Mutation Rate")
-da.drawChartByMutationType("mutationRate", {"populationSize":population_sizes[0]}, "Mutation Rate", "Comparision of Mutation Strategies")
+# da = DataAnalytics()
+# da.drawChart("populationSize", {"mutationRate":mutation_rates[0]}, "Population size", "Effect of Population Size")
+# da.drawChart("mutationRate", {"populationSize":population_sizes[0]}, "Mutation Rate", "Effect of Mutation Rate")
+# da.drawChartByMutationType("mutationRate", {"populationSize":population_sizes[0]}, "Mutation Rate", "Comparision of Mutation Strategies")

@@ -9,6 +9,8 @@ import random
 import math
 import GA
 import uuid
+from Profiler import profile
+import numpy as np
 
 class Individual:
     def __init__(self, _size, _data, _initialSolutionType):
@@ -21,6 +23,8 @@ class Individual:
         self.genSize    = _size
         self.data       = _data
         self.initialSolutionType = _initialSolutionType
+
+        self.genes = list(self.data.keys())
 
         if _initialSolutionType == GA.InitialSolutionType.HEURISTIC:
             self.nearestNeighbourGeneration()
@@ -47,7 +51,6 @@ class Individual:
         return self.getFitness() >= other.getFitness()
 
     def randomGeneration(self):
-        self.genes = list(self.data.keys())
 
         for i in range(0, self.genSize):
             n1 = random.randint(0, self.genSize - 1)
@@ -58,25 +61,25 @@ class Individual:
 
     def nearestNeighbourGeneration(self):
 
-        cities = list(self.data.keys())
+        cities = []
         current = random.randint(0, self.genSize - 1)
 
         i = 0
         visited = []
-        self.genes.append(cities[current])
+        cities.append(current)
         visited.append(current)
         shortest_distance = None
         closest_city = None
 
-        while len(self.genes) < self.genSize:
+        while len(cities) < self.genSize:
             if i not in visited:
-                distance = self.euclideanDistance(cities[current], cities[i])
+                distance = self.euclideanDistance(self.genes[current], self.genes[i])
                 if shortest_distance is None or distance < shortest_distance:
                     shortest_distance = distance
                     closest_city = i
 
-            if i == len(cities) - 1:
-                self.genes.append(cities[closest_city])
+            if i == self.genSize - 1:
+                cities.append(closest_city)
                 self.fitness += shortest_distance
                 current = closest_city
                 visited.append(closest_city)
@@ -85,6 +88,8 @@ class Individual:
                 closest_city = None
             else:
                 i += 1
+
+        self.genes = np.array(self.genes)[cities]
 
 
     def setGene(self, genes):
