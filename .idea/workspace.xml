@@ -4,6 +4,11 @@
     <list default="true" id="b9101cbd-4021-4066-8ecb-2afa88eac1f5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TSP_R00132719.py" beforeDir="false" afterPath="$PROJECT_DIR$/TSP_R00132719.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/1572950141.717045.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/1572954256.447075.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/1572958325.760539.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/1572967975.959159.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/1572972730.69003.txt" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,36 +19,9 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/pandas/core/indexes/base.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="47906">
-              <caret line="2898" selection-start-line="2898" selection-end-line="2898" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="29478">
-              <caret line="1734" selection-start-line="1734" selection-end-line="1734" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Configuration.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="8" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Individual.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1445">
+            <state relative-caret-position="1530">
               <caret line="90" selection-start-line="90" selection-end-line="90" />
               <folding>
                 <element signature="e#49#62#0" expanded="true" />
@@ -86,10 +64,19 @@
         <entry file="file://$PROJECT_DIR$/TSP_R00132719.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="128">
-              <caret line="393" column="21" selection-start-line="393" selection-start-column="21" selection-end-line="393" selection-end-column="21" />
+              <caret line="472" lean-forward="true" selection-start-line="472" selection-end-line="472" />
               <folding>
                 <element signature="e#112#128#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/numpy/core/fromnumeric.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="8976">
+              <caret line="542" selection-start-line="542" selection-end-line="542" />
             </state>
           </provider>
         </entry>
@@ -175,7 +162,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
+    <option name="x" value="-9" />
     <option name="width" value="1895" />
     <option name="height" value="1150" />
   </component>
@@ -235,7 +222,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TSP_R00132719.py" />
-      <option name="PARAMETERS" value="TSPdata\inst-4.tsp" />
+      <option name="PARAMETERS" value="TSPdata\inst-4.tsp 100 0.4 2" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -332,11 +319,18 @@
       <option name="project" value="LOCAL" />
       <updated>1572977322738</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="results">
+      <created>1572992941771</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1572992941772</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="0" width="1516" height="920" extended-state="0" />
+    <frame x="-7" y="0" width="1516" height="920" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49840257" visible="true" weight="0.2555781" />
@@ -392,8 +386,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/TSP_R00132719.py</url>
-          <line>160</line>
-          <option name="timeStamp" value="178" />
+          <line>473</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -430,47 +424,47 @@
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>np.array(self.genes)[cities]</expression-string>
+        <expression-string>childAMap[int(np.where(parent==gene)[0][0])] = gene</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.genes[cities]</expression-string>
+        <expression-string>int(np.where(parent==gene)[0][0])</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.genSize</expression-string>
+        <expression-string>np.where(parent==gene)[0][0]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>len(cities)</expression-string>
+        <expression-string>np.where(parent==gene)[0]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.genes.all()[0]</expression-string>
+        <expression-string>np.where(parent==gene)[0].min</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.genes.all()</expression-string>
+        <expression-string>np.where(parent==gene).min()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.genes.all(0)</expression-string>
+        <expression-string>np.where(parent==gene).any()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.genes[0]</expression-string>
+        <expression-string>np.where(parent==gene).all()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.genes</expression-string>
+        <expression-string>np.where(parent==gene)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -505,8 +499,8 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/debug.log">
-      <provider selected="true" editor-type-id="LargeFileEditor" />
       <provider editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="LargeFileEditor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/TSPdata/inst-4.tsp">
       <provider selected="true" editor-type-id="text-editor">
@@ -579,9 +573,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tables/Effect of Mutation Rate.txt" />
-    <entry file="file://$PROJECT_DIR$/tables/Effect of Population Size.txt" />
-    <entry file="file://$PROJECT_DIR$/tables/Comparision of Mutation Strategies.txt" />
     <entry file="file://$PROJECT_DIR$/charts/Effect of Mutation Rate.png" />
     <entry file="file://$PROJECT_DIR$/charts/Effect of Population Size.png" />
     <entry file="file://$PROJECT_DIR$/charts/config1/Effect of Population Size.png" />
@@ -607,16 +598,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Individual.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1445">
-          <caret line="90" selection-start-line="90" selection-end-line="90" />
-          <folding>
-            <element signature="e#49#62#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/tables/Comparision of Mutation Strategies.txt" />
+    <entry file="file://$PROJECT_DIR$/tables/Effect of Mutation Rate.txt" />
+    <entry file="file://$PROJECT_DIR$/tables/Effect of Population Size.txt" />
     <entry file="file://$USER_HOME$/.PyCharmCE2018.3/system/python_stubs/-491348699/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="62101">
@@ -641,6 +625,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/numpy/core/fromnumeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8976">
+          <caret line="542" selection-start-line="542" selection-end-line="542" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Experiment.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -651,10 +642,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Individual.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1530">
+          <caret line="90" selection-start-line="90" selection-end-line="90" />
+          <folding>
+            <element signature="e#49#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TSP_R00132719.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="128">
-          <caret line="393" column="21" selection-start-line="393" selection-start-column="21" selection-end-line="393" selection-end-column="21" />
+          <caret line="472" lean-forward="true" selection-start-line="472" selection-end-line="472" />
           <folding>
             <element signature="e#112#128#0" expanded="true" />
           </folding>

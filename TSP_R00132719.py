@@ -23,8 +23,12 @@ random.seed(myStudentNum)
 
 class BasicTSP:
     def __init__(self, _fName, _popSize, _mutationRate, _maxIterations, _configuration, _logLevel=logging.ERROR):
+
         """
-        Parameters and general variables
+        Setup logging
+        logging.ERROR - log to console
+        logging.DEBUG - log to debug file
+        default logging level - logging.DEBUG
         """
         self.logger = logging.getLogger('GA')
         self.logger.setLevel(_logLevel)
@@ -39,6 +43,9 @@ class BasicTSP:
         self.logger.addHandler(fh)
         self.logger.addHandler(ch)
 
+        """
+        Parameters and general variables
+        """
         self.population     = []
         self.newpopulation  = []
         self.matingPool     = []
@@ -59,6 +66,9 @@ class BasicTSP:
         self.initPopulation()
 
     def __str__(self):
+        """
+        outputs basic configuration for the run
+        """
         return "\nFile name: " + self.fName \
                + "\nPopulation size: " + str(self.popSize) \
                + "\nMutation rate: " + str(self.mutationRate) \
@@ -84,19 +94,31 @@ class BasicTSP:
             individual = Individual(self.genSize, self.data, self.initialSolutionType)
             self.population.append(individual)
 
+        """
+        Setting the initial best solution to first individual in the population
+        """
         self.best = self.population[0].copy()
+
+        """
+        converting the population to priority queue. First element has always the smallest fitness
+        """
         heapq.heapify(self.population)
 
         print ("Best initial sol: ", self.best.getFitness())
 
 
     def updateBest(self, candidate):
+        """
+        adding the candidate to newpopulation and updaing the best solution
+        :param candidate:
+        :return:
+        """
         heapq.heappush(self.newpopulation, candidate)
 
         if self.best.getFitness() == None or candidate.getFitness() < self.best.getFitness():
             # self.best = candidate.copy()
             self.best = candidate.copy()
-            print ("iteration: ",self.iteration, "best: ", self.best.getFitness())
+            print ("iteration: ", self.iteration, "best: ", self.best.getFitness())
 
     def randomSelection(self):
         """
@@ -111,13 +133,21 @@ class BasicTSP:
         """
         Your stochastic universal sampling Selection Implementation
         """
+        #sort population by fitness
         sorted = heapq.nsmallest(self.popSize, range(self.popSize), self.population.__getitem__)
+        #get the largest fitness score and add 1 to it
         largest = heapq.nlargest(1, self.population)[0].getFitness() + 1
+        #convert the fitness scores in order to increase the probability of smaller fitness to be selected (smallest fitness becomes the largest)
         population = dict((i, largest - self.population[i].getFitness()) for i in sorted)
 
+        #total fitness of the population
         F = sum(population.values())
+        #number of individuals to be selected
         N = self.popSize
+        #distance between pointers
         P = F/N
+
+        #Select a random starting point on the wheel
         start = random.uniform(0, P)
         pointers = [start + i * P for i in range(0, N)]
         total = 0
@@ -126,45 +156,47 @@ class BasicTSP:
         fitnessMeasures = list(population.values())
         indeces = list(population.keys())
 
+        #select individuals from the population
         keep = []
         for point in pointers:
             i = 0
+            #continue updating total of individuals until the fitness point is not reached
             total += fitnessMeasures[0]
             while total < point:
                 if i+1 == self.popSize:
                     total = F - total
                 else:
                     i += 1
+                    #continue going over the wheel when reached the end
                     total += fitnessMeasures[i]
-
+            #select individual
             keep.append(indeces[i])
 
+        # update mating pool with the individuals for selected indices
         self.matingPool = np.array(list(self.population))[keep]
 
     # @profile
     def uniformOrderBasedCrossover(self, indA, indB):
+        #make sure the generation size for both indviduals and select the smaller one, if it's not the case
         size = min(len(indA.genes), len(indB.genes))
+        #generate a binary template in the size of generation
         template = [random.randint(0, 1) for _ in range(size)]
         unpopulated = []
 
+        #find positions of 0's in binary template
         for idx, val in enumerate(template):
             if val == 0:
                 unpopulated.append(idx)
 
+        #find genes in parent in positions of 0's in binary template
         sortForChildA = np.array(indA.genes)[unpopulated]
         sortForChildB = np.array(indB.genes)[unpopulated]
 
-        # i = 0
-        # for binary_value in template:
-        #     if binary_value == 0:
-        #         unpopulated.append(i)
-        #         sortForChildA.append(indA.genes[i])
-        #         sortForChildB.append(indB.genes[i])
-        #     i += 1
-
+        #sort genes in order as they appear in parent
         sortForChildA = self.sortItems(sortForChildA, indB.genes)
         sortForChildB = self.sortItems(sortForChildB, indA.genes)
 
+        #replace genes in selected for indicies corresponding to 0's in binary template in order as they occur in parent
         j = 0
         for index in unpopulated:
             indA.genes[index] = sortForChildA[j]
@@ -174,11 +206,19 @@ class BasicTSP:
         return indA, indB
 
     def sortItems(self, childItems, parent):
+        """
+        sort child genes in order as they appear in parent
+        :param childItems:
+        :param parent:
+        :return:
+        """
         childAMap = {}
 
+        #map index position of gene in parent to child gene
         for gene in childItems:
-            childAMap[parent.index(gene)] = gene
+            childAMap[int(np.where(parent==gene)[0][0])] = gene
 
+        #order genes by order as they occur in parent
         childAMap = dict(sorted(childAMap.items()))
 
         return list(childAMap.values())
@@ -188,19 +228,22 @@ class BasicTSP:
         """
         Your PMX Crossover Implementation
         """
+
+        #make sure the generation size for both indviduals and select the smaller one, if it's not the case
         size = min(len(indA.genes), len(indB.genes))
 
         # pick 2 index numbers for gene swap
         gene_range = random.sample(range(0, size), 2)
 
+        #sort genes
         gene_range.sort()
 
         childA = indA.copy()
         childB = indB.copy()
 
-        # swap the sequence of genes withing the index range
+        # swap the sequence of genes within the index range
         childA.genes[gene_range[0]:gene_range[1]] = indB.genes[gene_range[0]:gene_range[1]]
-        childB.genes[gene_range[0]:gene_range[1]] = indB.genes[gene_range[0]:gene_range[1]]
+        childB.genes[gene_range[0]:gene_range[1]] = indA.genes[gene_range[0]:gene_range[1]]
 
         # for each gene in sequence
         for i in range(gene_range[0], gene_range[1]):
@@ -216,9 +259,21 @@ class BasicTSP:
         return childA, childB
 
     def swapGenesInSequence(self, parent1, parent2, target, source_gene, target_gene, start_swap_index, end_swap_index):
+        """
+        replace gene in child given the insert position is not in the range of genes already copied. Otherwise find new position
+        by finding index of gene currently mapped to
+        :param parent1:
+        :param parent2:
+        :param target: child
+        :param source_gene:
+        :param target_gene:
+        :param start_swap_index:
+        :param end_swap_index:
+        :return:
+        """
         mapping_index = parent1.genes.index(target_gene)
         if mapping_index < start_swap_index or mapping_index >= end_swap_index:
-            target[mapping_index] = source_gene
+            target.genes[mapping_index] = source_gene
         else:
             self.swapGenesInSequence(parent1, parent2, target, source_gene, parent2.genes[parent1.genes.index(target_gene)], start_swap_index, end_swap_index)
 
@@ -381,64 +436,49 @@ class BasicTSP:
         print ("Best Solution: ", self.best.getFitness())
 
 
-if len(sys.argv) < 2:
+if len(sys.argv) < 5:
     print ("Error - Incorrect input")
-    print ("Expecting python BasicTSP.py [instance] ")
+    print ("Expecting python BasicTSP.py [instance], population size, mutation rate, configuration number (1 of 8) ")
     sys.exit(0)
 
+# files = ["TSPdata\inst-4.tsp", "TSPdata\inst-6.tsp", "TSPdata\inst-16.tsp"]
 problem_file = sys.argv[1]
-# ga = BasicTSP(sys.argv[1], 300, 0.1, 500)
-
-files = ["TSPdata\inst-4.tsp", "TSPdata\inst-6.tsp", "TSPdata\inst-16.tsp"]
-
-population_sizes = [100]
-mutation_rates = [0.1]
+# population_sizes = [100, 200, 300, 400]
+population_size = int(sys.argv[2])
+# mutation_rates = [0.1, 0.2, 0.3, 0.4]
+mutation_rate = float(sys.argv[3])
+config_no = int(sys.argv[4])-1
 number_of_test_iterations = 5
 no_of_iterations = 500
 
-# population_sizes = [100, 200, 300, 400]
-# mutation_rates = [0.1, 0.2, 0.3, 0.4]
-# number_of_test_iterations = 5
-# no_of_iterations = 500
-
-# population_sizes = [10, 20, 30, 40]
-# mutation_rates = [0.1, 0.2, 0.3, 0.4]
-# number_of_test_iterations = 5
-# no_of_iterations = 10
-
-
 configurations = [
-    # Configuration("1", GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.UNIFORM_ORDER_BASED,
-    #                    GA.MutationType.INVERSION_MUTATION)
-    # Configuration("2", GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
-    # Configuration("3", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-    #                           GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.RECIPROCAL_EXCHANGE)
-    # Configuration("4", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-    #                           GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE)
-    # Configuration("5", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-    #                           GA.CrossoverType.PMX, GA.MutationType.INVERSION_MUTATION)
-    # Configuration("6", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
-    #                           GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION)
+    Configuration("1", GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.UNIFORM_ORDER_BASED,
+                       GA.MutationType.INVERSION_MUTATION),
+    Configuration("2", GA.SelectionType.RANDOM, GA.InitialSolutionType.RANDOM, GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
+    Configuration("3", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
+                              GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.RECIPROCAL_EXCHANGE),
+    Configuration("4", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
+                              GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
+    Configuration("5", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
+                              GA.CrossoverType.PMX, GA.MutationType.INVERSION_MUTATION),
+    Configuration("6", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.RANDOM,
+                              GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION),
     Configuration("7", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
                   GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
-    # Configuration("8", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
-    #                       GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION)
+    Configuration("8", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
+                          GA.CrossoverType.UNIFORM_ORDER_BASED, GA.MutationType.INVERSION_MUTATION)
 ]
 
-# Configuration("7", GA.SelectionType.STOCHASTIC_UNIVERSAL_SAMPLING, GA.InitialSolutionType.HEURISTIC,
-#               GA.CrossoverType.PMX, GA.MutationType.RECIPROCAL_EXCHANGE),
+config = configurations[config_no]
 
-for population_size in population_sizes:
-    for mutation_rate in mutation_rates:
-        for config in configurations:
-            exp = Experiment(config, problem_file, no_of_iterations, mutation_rate, population_size)
-            for test in range(0, number_of_test_iterations):
-                print("Run: " + str(test + 1))
-                ga = BasicTSP(problem_file, population_size, mutation_rate, no_of_iterations, config)
-                print(ga)
-                print(config)
-                ga.search()
-                exp.saveResult(str(test + 1), ga.best)
+exp = Experiment(config, problem_file, no_of_iterations, mutation_rate, population_size)
+for test in range(0, number_of_test_iterations):
+    print("Run: " + str(test + 1))
+    ga = BasicTSP(problem_file, population_size, mutation_rate, no_of_iterations, config)
+    print(ga)
+    print(config)
+    ga.search()
+    exp.saveResult(str(test + 1), ga.best)
 
 # da = DataAnalytics()
 # da.drawChart("populationSize", {"mutationRate":mutation_rates[0]}, "Population size", "Effect of Population Size")
