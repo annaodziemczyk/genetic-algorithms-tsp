@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b9101cbd-4021-4066-8ecb-2afa88eac1f5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAnalytics.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataAnalytics.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,7 +16,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Individual.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1530">
+            <state relative-caret-position="503">
               <caret line="90" selection-start-line="90" selection-end-line="90" />
               <folding>
                 <element signature="e#49#62#0" expanded="true" />
@@ -33,11 +34,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DataAnalytics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="47" selection-start-line="47" selection-end-line="47" />
+            <state relative-caret-position="414">
+              <caret line="116" column="66" lean-forward="true" selection-start-line="116" selection-start-column="66" selection-end-line="116" selection-end-column="66" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -54,11 +55,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TSP_R00132719.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="469" column="1" lean-forward="true" selection-start-line="469" selection-start-column="1" selection-end-line="469" selection-end-column="1" />
+            <state relative-caret-position="298">
+              <caret line="482" selection-start-line="482" selection-end-line="485" selection-end-column="139" />
               <folding>
                 <element signature="e#112#128#0" expanded="true" />
               </folding>
@@ -78,8 +79,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Experiment.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+            <state relative-caret-position="588">
+              <caret line="49" column="8" selection-start-line="49" selection-start-column="8" selection-end-line="49" selection-end-column="8" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -148,15 +149,15 @@
         <option value="$PROJECT_DIR$/GA.py" />
         <option value="$PROJECT_DIR$/Configuration.py" />
         <option value="$PROJECT_DIR$/Result.py" />
-        <option value="$PROJECT_DIR$/DataAnalytics.py" />
         <option value="$PROJECT_DIR$/Experiment.py" />
         <option value="$PROJECT_DIR$/Individual.py" />
         <option value="$PROJECT_DIR$/TSP_R00132719.py" />
+        <option value="$PROJECT_DIR$/DataAnalytics.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-9" />
+    <option name="x" value="-10" />
     <option name="width" value="1895" />
     <option name="height" value="1150" />
   </component>
@@ -166,7 +167,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -178,6 +178,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -216,7 +217,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TSP_R00132719.py" />
-      <option name="PARAMETERS" value="TSPdata\inst-4.tsp 200 0.1 5" />
+      <option name="PARAMETERS" value="TSPdata\inst-4.tsp 200 0.2 5" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -327,19 +328,26 @@
       <option name="project" value="LOCAL" />
       <updated>1573050627340</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="results">
+      <created>1573061522530</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1573061522530</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="1516" height="920" extended-state="0" />
+    <frame x="-8" y="0" width="1516" height="920" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49840257" visible="true" weight="0.2555781" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49840257" visible="true" weight="0.2555781" />
       <window_info id="Structure" order="1" sideWeight="0.50159746" side_tool="true" weight="0.25592417" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32233503" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32741117" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32741117" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" />
@@ -379,9 +387,9 @@
     <MESSAGE value="profiling" />
     <MESSAGE value="plotting" />
     <MESSAGE value="tables and charts" />
-    <MESSAGE value="results" />
     <MESSAGE value="results, pmx crossover fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="results, pmx crossover fix" />
+    <MESSAGE value="results" />
+    <option name="LAST_COMMIT_MESSAGE" value="results" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -610,16 +618,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DataAnalytics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="47" selection-start-line="47" selection-end-line="47" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/numpy/lib/npyio.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23001">
@@ -636,8 +634,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Experiment.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+        <state relative-caret-position="588">
+          <caret line="49" column="8" selection-start-line="49" selection-start-column="8" selection-end-line="49" selection-end-column="8" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
           </folding>
@@ -646,7 +644,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Individual.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1530">
+        <state relative-caret-position="503">
           <caret line="90" selection-start-line="90" selection-end-line="90" />
           <folding>
             <element signature="e#49#62#0" expanded="true" />
@@ -656,10 +654,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TSP_R00132719.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="469" column="1" lean-forward="true" selection-start-line="469" selection-start-column="1" selection-end-line="469" selection-end-column="1" />
+        <state relative-caret-position="298">
+          <caret line="482" selection-start-line="482" selection-end-line="485" selection-end-column="139" />
           <folding>
             <element signature="e#112#128#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DataAnalytics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="116" column="66" lean-forward="true" selection-start-line="116" selection-start-column="66" selection-end-line="116" selection-end-column="66" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
