@@ -3,12 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b9101cbd-4021-4066-8ecb-2afa88eac1f5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSP_R00132719.py" beforeDir="false" afterPath="$PROJECT_DIR$/TSP_R00132719.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/1572950141.717045.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/1572954256.447075.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/1572958325.760539.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/1572967975.959159.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/1572972730.69003.txt" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,8 +57,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TSP_R00132719.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="472" lean-forward="true" selection-start-line="472" selection-end-line="472" />
+            <state relative-caret-position="77">
+              <caret line="469" column="1" lean-forward="true" selection-start-line="469" selection-start-column="1" selection-end-line="469" selection-end-column="1" />
               <folding>
                 <element signature="e#112#128#0" expanded="true" />
               </folding>
@@ -222,7 +216,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TSP_R00132719.py" />
-      <option name="PARAMETERS" value="TSPdata\inst-4.tsp 100 0.4 2" />
+      <option name="PARAMETERS" value="TSPdata\inst-4.tsp 200 0.1 5" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -326,7 +320,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572992941772</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="results, pmx crossover fix">
+      <created>1573050627339</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1573050627340</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -379,7 +380,8 @@
     <MESSAGE value="plotting" />
     <MESSAGE value="tables and charts" />
     <MESSAGE value="results" />
-    <option name="LAST_COMMIT_MESSAGE" value="results" />
+    <MESSAGE value="results, pmx crossover fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="results, pmx crossover fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -654,8 +656,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TSP_R00132719.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="472" lean-forward="true" selection-start-line="472" selection-end-line="472" />
+        <state relative-caret-position="77">
+          <caret line="469" column="1" lean-forward="true" selection-start-line="469" selection-start-column="1" selection-end-line="469" selection-end-column="1" />
           <folding>
             <element signature="e#112#128#0" expanded="true" />
           </folding>
